@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+         http://www.springframework.org/schema/aop 
+         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+
+   <bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>
+					classpath:/com/landicorp/config/jdbc.properties
+				</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass"
+			value="${mybatis.connection.driver_class}" />
+		<property name="jdbcUrl" value="${mybatis.connection.url}" />
+		<property name="user" value="${mybatis.connection.username}" />
+		<property name="password"
+			value="${mybatis.connection.password}" />
+
+		<property name="minPoolSize"
+			value="${mybatis.c3p0.minPoolSize}" />
+		<property name="maxPoolSize"
+			value="${mybatis.c3p0.maxPoolSize}" />
+		<property name="maxIdleTime"
+			value="${mybatis.c3p0.maxIdleTime}" />
+		<property name="acquireIncrement"
+			value="${mybatis.c3p0.acquireIncrement}" />
+		<property name="maxStatements"
+			value="${mybatis.c3p0.maxStatements}" />
+		<property name="initialPoolSize"
+			value="${mybatis.c3p0.initialPoolSize}" />
+		<property name="idleConnectionTestPeriod"
+			value="${mybatis.c3p0.idleConnectionTestPeriod}" />
+		<property name="acquireRetryAttempts"
+			value="${mybatis.c3p0.acquireRetryAttempts}" />
+		<property name="breakAfterAcquireFailure"
+			value="${mybatis.c3p0.breakAfterAcquireFailure}" />
+		<property name="testConnectionOnCheckout"
+			value="${mybatis.c3p0.testConnectionOnCheckout}" />
+	</bean>
+
+	<!-- 配置mybitas SqlSessionFactoryBean  -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="configLocation">
+			<value>classpath:/com/landicorp/config/mybatis.xml</value>
+		</property>
+	</bean>
+	<!-- 配置SqlSessionTemplate -->
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg>
+			<ref local="sqlSessionFactory" />
+		</constructor-arg>
+	</bean>
+	
+	<!-- ################################# 第二数据源HIS相关配置  ############################################### -->
+	<!-- 配置第二数据源  -->
+	
+	
+	<!-- <bean id="dataSource_1"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass"
+			value="${mybatis.yinyiDriverName}" />
+		<property name="jdbcUrl" value="${mybatis.yinyiServerUrl}" />
+		<property name="user" value="${mybatis.yinyiServerUser}" />
+		<property name="password" value="${mybatis.yinyiServerPwd}" />
+
+		<property name="minPoolSize"
+			value="${mybatis.c3p0.minPoolSize}" />
+		<property name="maxPoolSize"
+			value="${mybatis.c3p0.maxPoolSize}" />
+		<property name="maxIdleTime"
+			value="${mybatis.c3p0.maxIdleTime}" />
+		<property name="acquireIncrement"
+			value="${mybatis.c3p0.acquireIncrement}" />
+		<property name="maxStatements"
+			value="${mybatis.c3p0.maxStatements}" />
+		<property name="initialPoolSize"
+			value="${mybatis.c3p0.initialPoolSize}" />
+		<property name="idleConnectionTestPeriod"
+			value="${mybatis.c3p0.idleConnectionTestPeriod}" />
+		<property name="acquireRetryAttempts"
+			value="${mybatis.c3p0.acquireRetryAttempts}" />
+		<property name="breakAfterAcquireFailure"
+			value="${mybatis.c3p0.breakAfterAcquireFailure}" />
+		<property name="testConnectionOnCheckout"
+			value="${mybatis.c3p0.testConnectionOnCheckout}" />
+	</bean>
+
+	mybaits 工厂类
+	<bean id="sqlSessionFactory_1"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource_1" />
+		</property>
+		<property name="configLocation">
+			<value>classpath:/com/landicorp/config/mybatis.xml</value>
+		</property>
+	</bean>
+	<bean id="sqlSessionTemplate1"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg>
+			<ref local="sqlSessionFactory_1" />
+		</constructor-arg>
+	</bean> -->
+	
+	<!-- ################################# 第二数据源HIS相关配置  ############################################### -->
+	<!-- 配置第二数据源  -->
+	
+	
+	<!-- <bean id="dataSource_1"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass"
+			value="${mybatis.oracelDriverName}" />
+		<property name="jdbcUrl" value="${mybatis.oracleServerUrl}" />
+		<property name="user" value="${mybatis.oracleServerUser}" />
+		<property name="password" value="${mybatis.oracleServerPwd}" />
+
+		<property name="minPoolSize"
+			value="${mybatis.c3p0.minPoolSize}" />
+		<property name="maxPoolSize"
+			value="${mybatis.c3p0.maxPoolSize}" />
+		<property name="maxIdleTime"
+			value="${mybatis.c3p0.maxIdleTime}" />
+		<property name="acquireIncrement"
+			value="${mybatis.c3p0.acquireIncrement}" />
+		<property name="maxStatements"
+			value="${mybatis.c3p0.maxStatements}" />
+		<property name="initialPoolSize"
+			value="${mybatis.c3p0.initialPoolSize}" />
+		<property name="idleConnectionTestPeriod"
+			value="${mybatis.c3p0.idleConnectionTestPeriod}" />
+		<property name="acquireRetryAttempts"
+			value="${mybatis.c3p0.acquireRetryAttempts}" />
+		<property name="breakAfterAcquireFailure"
+			value="${mybatis.c3p0.breakAfterAcquireFailure}" />
+		<property name="testConnectionOnCheckout"
+			value="${mybatis.c3p0.testConnectionOnCheckout}" />
+			
+		<property name="unreturnedConnectionTimeout" value="20" />
+		<property name="debugUnreturnedConnectionStackTraces" value="true" />
+	</bean>
+ 
+	配置 transaction 处理器
+	
+	<bean id="transactionManager_1"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource_1" />
+	</bean>
+ 
+	mybaits 工厂类
+	
+	<bean id="sqlSessionFactory_1"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource_1" />
+		</property>
+		<property name="configLocation">
+			<value>classpath:/com/landicorp/config/mybatis.xml</value>
+		</property>
+	</bean>
+	<bean id="sqlSessionTemplate1"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg>
+			<ref local="sqlSessionFactory_1" />
+		</constructor-arg>
+	</bean> -->
+	 
+	<!--
+		================================事务相关控制=================================================
+	-->
+	
+	<bean name="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<tx:advice id="transactionAdvice"
+		transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*Transaction" propagation="REQUIRED"
+				read-only="false"
+				rollback-for="java.lang.RuntimeException,com.landicorp.core.exception.TransactionException" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="coreTransactionPointcut"
+			expression="execution(public * com.landicorp.core.service.*.*(..))" />
+		<aop:advisor pointcut-ref="coreTransactionPointcut"
+			advice-ref="transactionAdvice" />
+	</aop:config>
+	
+	<aop:config>
+		<aop:pointcut id="ordosTransactionPointcut"
+			expression="execution(public * com.landicorp.hospital.service.*.*(..))" />
+		<aop:advisor pointcut-ref="ordosTransactionPointcut"
+			advice-ref="transactionAdvice" />
+	</aop:config>
+
+	<!-- <bean name="transactionManagerHis"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource_1"></property>
+	</bean>
+	
+	<tx:advice id="transactionAdviceHis"
+		transaction-manager="transactionManagerHis">
+		<tx:attributes>
+			<tx:method name="*Transaction" propagation="REQUIRED"
+				read-only="false"
+				rollback-for="java.lang.RuntimeException,com.landicorp.core.exception.TransactionException" />
+		</tx:attributes>
+	</tx:advice>
+		
+	<aop:config>
+		<aop:pointcut id="ordosHisTransactionPointcut"
+			expression="execution(public * com.landicorp.hospital.service.*.*(..))" />
+		<aop:advisor pointcut-ref="ordosHisTransactionPointcut"
+			advice-ref="transactionAdviceHis" />
+	</aop:config>
+	  -->
+
+</beans>
